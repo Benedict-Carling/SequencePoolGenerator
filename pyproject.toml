@@ -5,7 +5,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "sequencegenerator"
-version = "0.3.0"
+version = "0.4.0"
 description = "sequencegenerator"
 readme = "README.md"
 authors = ["sequencegenerator <hello@sequencegenerator.com>"]

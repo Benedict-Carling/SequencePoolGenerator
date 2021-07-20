@@ -1,5 +1,9 @@
 import math
 import random
+from IUPACController import createMutationMap
+from IUPACController import initialMutation
+from IUPACController import mutateSequence
+
 
 from Bio.SeqUtils import GC
 from Bio.SeqUtils import MeltingTemp as mt
@@ -48,21 +52,6 @@ def TM_deviance(my_initial_seq):
 def score(sequence):
     return calculate_inverted_repeats(sequence,4)*10 + calculate_inverted_repeats(sequence,6)*10 + calculate_gc_deviation(sequence) + TM_deviance(sequence)
 
-def mutate_sequence(seq,number_mutations,mutation_positions):
-    print(str(number_mutations) + ' samples are bieng taken from ' + str(len(mutation_positions)) + ' possible mutation positions')
-    mutation_indexs = random.sample(range(0, len(mutation_positions)), number_mutations)
-    for mutation_position in mutation_indexs:
-        translated_mutation_position = mutation_positions[mutation_position]
-        new_nulcleotide = random.choice(NUCLEOTIDES)
-        seq = seq[:translated_mutation_position] + new_nulcleotide + seq[translated_mutation_position+1:]
-    return seq
-
-def initial_mutation(seq,mutation_positions):
-    seq = list(seq)
-    for occurance in mutation_positions:
-        seq[occurance] = random.choice(NUCLEOTIDES)
-    return ''.join(seq)
-
 
 def monte_carlo_simulated_anneal(seq, initial_temperature, iteration_length,mutation_positions):
     for iteration in range(iteration_length):
@@ -75,7 +64,7 @@ def monte_carlo_simulated_anneal(seq, initial_temperature, iteration_length,muta
         pre_mutation_objective = score(seq)
         print('pre_mutation_objective: ' + str(pre_mutation_objective))
         # mutate seq
-        seq = mutate_sequence(seq,math.ceil(temperature),mutation_positions)
+        seq = mutateSequence(seq,math.ceil(temperature),mutation_positions)
         # seq post mutation objective
         post_mutation_objective = score(seq)
         print('post_mutation_objective: ' + str(post_mutation_objective))
@@ -96,9 +85,9 @@ def findOccurrences(s, ch):
 
 def generatePool(input_sequence,initial_temperature, iteration_length, Tm_flexibility, GC_flexibility, poolLength):
     pool = []
-    mutation_positions = findOccurrences(input_sequence,'X')
+    mutation_positions = createMutationMap(input_sequence)
+    input_sequence = initialMutation(input_sequence,mutation_positions)
     while len(pool) < poolLength:
-        input_sequence = initial_mutation(input_sequence,mutation_positions)
         optimised_sequence = monte_carlo_simulated_anneal(input_sequence,initial_temperature,iteration_length,mutation_positions)
         no4repeats = calculate_inverted_repeats(optimised_sequence,4)
         no6repeats = calculate_inverted_repeats(optimised_sequence,6)
@@ -108,4 +97,4 @@ def generatePool(input_sequence,initial_temperature, iteration_length, Tm_flexib
             pool.append(optimised_sequence)
     return pool
 
-my_pool = generatePool(input_sequence='ACTXXXXXXXXXXXXXXXXXXXXXXXAXTGAAXXXXXXXXXXX',initial_temperature=10, iteration_length=100, Tm_flexibility=5, GC_flexibility=5, poolLength=3)
+my_pool = generatePool(input_sequence='NNNNNNNSSRRRNNNNNNNNNNNNSSSRSRSR',initial_temperature=10, iteration_length=100, Tm_flexibility=5, GC_flexibility=5, poolLength=3)

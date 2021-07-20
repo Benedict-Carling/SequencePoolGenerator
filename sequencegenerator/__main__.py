@@ -8,8 +8,9 @@ import typer
 from rich.console import Console
 
 from sequencegenerator import version
-from sequencegenerator.example import hello
 from sequencegenerator.generatePool import generatePool
+from sequencegenerator.iupacController import createMutationMap
+from sequencegenerator.iupacController import initialMutation, mutateSequence
 
 
 class Color(str, Enum):
