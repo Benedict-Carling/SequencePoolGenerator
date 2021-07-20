@@ -9,6 +9,7 @@ from rich.console import Console
 
 from sequencegenerator import version
 from sequencegenerator.example import hello
+from sequencegenerator.generatePool import generatePool
 
 
 class Color(str, Enum):

@@ -5,7 +5,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "sequencegenerator"
-version = "0.1.0"
+version = "0.3.0"
 description = "sequencegenerator"
 readme = "README.md"
 authors = ["sequencegenerator <hello@sequencegenerator.com>"]
@@ -36,6 +36,7 @@ python = "^3.9"
 
 typer = {extras = ["all"], version = "^0.3.2"}
 rich = "^10.4.0"
+biopython = "^1.79"
 
 [tool.poetry.dev-dependencies]
 bandit = "^1.7.0"
