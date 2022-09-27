@@ -43,7 +43,7 @@ bandit = "^1.7.0"
 black = {version = "^21.6b0", allow-prereleases = true}
 darglint = "^1.8.0"
 isort = {extras = ["colors"], version = "^5.9.1"}
-mypy = "^0.910"
+mypy = "^0.981"
 pre-commit = "^2.13.0"
 pydocstyle = "^6.1.1"
 pylint = "^2.8.3"
