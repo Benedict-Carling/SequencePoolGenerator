@@ -45,7 +45,7 @@ darglint = "^1.8.0"
 isort = {extras = ["colors"], version = "^5.9.1"}
 mypy = "^0.910"
 pre-commit = "^2.13.0"
-pydocstyle = "^6.1.1"
+pydocstyle = "^6.2.1"
 pylint = "^2.8.3"
 pytest = "^6.2.4"
 pyupgrade = "^2.20.0"
